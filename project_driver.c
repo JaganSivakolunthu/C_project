@@ -114,7 +114,7 @@ void add_end(ST **ptr,int *r,BF **hp,int *t)
     ST *p = *ptr;
     BF *bf = *hp;
     ST *temp = (ST *)malloc(sizeof(ST));
-    puts("Enter the student record...");
+    puts("Enter the student record...in the format of (name - mark_obtained)");
     scanf("%s%f",temp->name,&temp->mark);
 //++r_n;  // as the roll number to be increased... by itself
     if(*hp == NULL){
@@ -421,17 +421,20 @@ void save(ST **ptr)
 void save_exit(ST **ptr)
 {
         ST *p = *ptr;
-        FILE *fp = fopen("data.dat","w");
-        //FILE *fp = fopen("data.dat","a+");
+        //FILE *fp = fopen("data.dat","w");	// to display only the new data...
+        FILE *fp = fopen("data.dat","a+");	// to display the existing content...
         while(p){
                 fprintf(fp,"%d %s %f\n",p->roll_no,p->name,p->mark);
                 p = p->nxt;
         }
+	fclose(fp);
+	exit(0);	//on successful command
 }
 void exit_ws(void)
 {
         FILE *fp = fopen("data.dat","a+");
         fclose(fp);
+	exit(0);	//on successful command
 }
 
 void modify(ST **ptr)
@@ -465,6 +468,7 @@ void modify_roll(ST **ptr)
                 if(p->roll_no == i){
                         puts("Enter the new data to modify the old data....");
                         scanf("%s%f",p->name,&p->mark);
+						//break;
                 }
                 p = p->nxt;
         }
@@ -478,7 +482,7 @@ void modify_name(ST **ptr)
     puts("Enter the name to search for modification....");
     scanf("%s", bf);
     c = count_repeat_nm(ptr, bf);
-    printf("%d\n", c);
+    //printf("%d\n", c);
     ST **temp = (ST **)malloc(c * sizeof(ST *));
     ST *curr = *ptr;
     i = 0;
@@ -494,6 +498,7 @@ void modify_name(ST **ptr)
     {
         puts("Enter new name and marks:");
         scanf("%s %f", temp[0]->name, &temp[0]->mark);
+		//break;
     }
     else
         print_repeated(&temp, c);
@@ -507,7 +512,7 @@ void modify_mark(ST **ptr)
     puts("Enter the mark to search for modification....");
     scanf("%f",&bf_m);
     c = count_repeat_mk(ptr, bf_m);
-    printf("%d\n", c);
+    //printf("%d\n", c);
     ST **temp = (ST **)malloc(c * sizeof(ST *));
     ST *curr = *ptr;
     i = 0;
@@ -523,6 +528,7 @@ void modify_mark(ST **ptr)
     {
         puts("Enter new name and marks:");
         scanf("%s %f", temp[0]->name, &temp[0]->mark);
+		//break;
     }
     else
         print_repeated(&temp, c);
@@ -557,8 +563,11 @@ int count_repeat_mk(ST **P, float p)
 void print_repeated(ST ***temp,int c)
 {
         ST **t = *temp;
+		puts("Displaying the repeated elements.....");
+		output_dp();
         for(int i=0;i<c;i++)
-        printf("%d %s %f\n",t[i]->roll_no,t[i]->name,t[i]->mark);
+        printf("| %-7d | %-27s | %6.2f |\n",t[i]->roll_no,t[i]->name,t[i]->mark);
+		puts("|_________|_____________________________|________|");
         puts("calling the modify_roll()...");
         modify_roll(*temp);
 }
@@ -651,3 +660,4 @@ void output_dp(void)
     puts("| roll_no | name \t\t\t| mark   |");
     puts("|_________|_____________________________|________|");
 }
+
