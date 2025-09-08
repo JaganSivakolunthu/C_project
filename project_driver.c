@@ -351,6 +351,14 @@ void delete_name(ST **p,BF **bhp)
     int TEMP;  // variable for passing in the buffer to store the deleted data...
     puts("Enter the name to delete the student data.....");
     scanf("%s", nm);
+    //int c = count_repeat_nm(p, nm);
+    //
+    //
+    //need a driver for the purpose of the deletion of the repewated elements in the name of the record....,    try to refer the modify search definition ....;
+    //
+    //
+    //
+    //
     while(ptr)
     {
         t = ptr->nxt;
@@ -660,4 +668,3 @@ void output_dp(void)
     puts("| roll_no | name \t\t\t| mark   |");
     puts("|_________|_____________________________|________|");
 }
-
